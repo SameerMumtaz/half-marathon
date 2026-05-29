@@ -532,11 +532,72 @@ h1.title .accent { color: var(--accent); }
   color: var(--muted); font-family: inherit;
   font-size: 10px; letter-spacing: 0.15em;
   padding: 8px 14px; border-radius: 3px;
-  cursor: pointer; margin-top: 14px;
+  cursor: pointer;
   text-transform: uppercase; transition: all 0.2s ease;
 }
 
 .reset-btn:hover { border-color: var(--heat); color: var(--heat); }
+
+.backup-section {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.backup-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.backup-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 10px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.backup-btn.primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.backup-btn.primary:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.backup-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.backup-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+  min-height: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.backup-status.fade-out { opacity: 0; }
+
+.backup-status.error { color: var(--heat); }
+
+.import-input { display: none; }
 
 @media (min-width: 720px) {
   .principle-grid { grid-template-columns: 1fr 1fr; }
@@ -710,8 +771,16 @@ h1.title .accent { color: var(--accent); }
 
 <div class="footer">
   Training log · Hybrid lift + run · Progress saved locally
-  <br>
-  <button class="reset-btn" onclick="resetProgress()">⟲ Reset all progress</button>
+
+  <div class="backup-section">
+    <div class="backup-row">
+      <button class="backup-btn primary" onclick="exportProgress()">⬇ Save backup</button>
+      <button class="backup-btn" onclick="document.getElementById('import-input').click()">⬆ Restore backup</button>
+    </div>
+    <input type="file" id="import-input" class="import-input" accept=".json,application/json" onchange="importProgress(event)">
+    <div class="backup-status" id="backup-status"></div>
+    <button class="reset-btn" onclick="resetProgress()">⟲ Reset all progress</button>
+  </div>
 </div>
 
 </div>
@@ -1209,6 +1278,88 @@ function detectCurrentWeek() {
   } else {
     showPhase(1);
   }
+}
+
+function showStatus(msg, isError) {
+  const el = document.getElementById('backup-status');
+  el.textContent = msg;
+  el.className = 'backup-status' + (isError ? ' error' : '');
+  setTimeout(() => { el.classList.add('fade-out'); }, 3000);
+  setTimeout(() => { el.textContent = ''; el.classList.remove('fade-out', 'error'); }, 3500);
+}
+
+function exportProgress() {
+  const done = Object.values(progress).filter(v => v).length;
+  const total = document.querySelectorAll('.workout-check:not([disabled])').length;
+  const payload = {
+    app: '13.1 Half Marathon Training',
+    version: 'v3',
+    exportedAt: new Date().toISOString(),
+    raceDate: '2026-12-13',
+    completed: done,
+    totalWorkouts: total,
+    progress: progress
+  };
+  const json = JSON.stringify(payload, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `13-1-backup-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showStatus(`✓ Saved · ${done}/${total} workouts`);
+}
+
+async function importProgress(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    // Accept both new format ({progress: {...}}) and raw old format
+    const restored = data.progress || data;
+
+    if (typeof restored !== 'object' || restored === null) {
+      throw new Error('Invalid backup file');
+    }
+
+    // Merge restored into current (restored wins on conflict)
+    const merged = { ...progress, ...restored };
+
+    // Validate the data has at least some workout keys
+    const keys = Object.keys(restored).filter(k => k.match(/^w\d+-\d+$/));
+    if (keys.length === 0) {
+      throw new Error('No workout data found in file');
+    }
+
+    if (!confirm(`Restore backup with ${keys.length} workout entries? Current progress will be merged (restored data wins on conflicts).`)) {
+      event.target.value = '';
+      return;
+    }
+
+    progress = merged;
+    await storage.save(progress);
+
+    // Update all checkboxes to match
+    document.querySelectorAll('.workout-check').forEach(cb => {
+      cb.checked = !!progress[cb.dataset.id];
+    });
+    updateProgress();
+
+    const restoredCount = Object.values(restored).filter(v => v).length;
+    showStatus(`✓ Restored · ${restoredCount} workouts`);
+  } catch (e) {
+    console.error('Import failed:', e);
+    showStatus('✗ Import failed · invalid file', true);
+  }
+
+  event.target.value = '';
 }
 
 async function resetProgress() {
