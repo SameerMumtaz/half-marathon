@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALF MARATHON · DEC 13</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="13.1">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%230a0b0d' width='180' height='180' rx='40'/%3E%3Ctext x='90' y='112' font-family='Helvetica' font-size='62' font-weight='900' fill='%23d4ff3a' text-anchor='middle' letter-spacing='-2'%3E13.1%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0b0d;
+  --surface: #14161a;
+  --surface-2: #1c1f25;
+  --border: #2a2e36;
+  --border-bright: #3a3f48;
+  --text: #f5f5f4;
+  --muted: #8a8e95;
+  --dim: #5a5e65;
+  --accent: #d4ff3a;
+  --accent-dim: rgba(212, 255, 58, 0.12);
+  --heat: #ff6b3d;
+  --long: #ff9b3d;
+  --strength: #7aa9ff;
+  --strength-dim: rgba(122, 169, 255, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(212, 255, 58, 0.04), transparent 50%),
+    radial-gradient(circle at 80% 100%, rgba(122, 169, 255, 0.03), transparent 50%);
+}
+
+.container { max-width: 920px; margin: 0 auto; padding: 24px 20px 80px; }
+
+header { border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 32px; position: relative; }
+
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.eyebrow .dot {
+  display: inline-block; width: 6px; height: 6px;
+  background: var(--accent); border-radius: 50%;
+  margin-right: 8px; vertical-align: middle;
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+h1.title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 12vw, 96px);
+  line-height: 0.88; letter-spacing: -0.01em;
+  margin: 4px 0 18px;
+}
+
+h1.title .accent { color: var(--accent); }
+
+.countdown-row { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: end; margin-bottom: 20px; }
+
+.countdown {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(64px, 18vw, 120px);
+  line-height: 0.85; color: var(--accent); letter-spacing: -0.02em;
+}
+
+.countdown-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase;
+  padding-bottom: 14px; line-height: 1.7;
+}
+
+.race-info {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; color: var(--muted);
+  letter-spacing: 0.08em; margin-bottom: 22px;
+}
+
+.race-info strong { color: var(--text); font-weight: 500; }
+
+.progress-section { background: var(--surface); border: 1px solid var(--border); padding: 20px; border-radius: 4px; }
+.progress-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+
+.progress-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase;
+}
+
+.progress-stats { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.02em; }
+.progress-stats .accent { color: var(--accent); }
+.progress-stats .slash { color: var(--dim); margin: 0 4px; }
+.progress-bar { height: 4px; background: var(--surface-2); border-radius: 2px; overflow: hidden; position: relative; }
+.progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 12px var(--accent); }
+
+.schedule-key {
+  margin: 24px 0 8px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.schedule-key h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.schedule-key h3 .accent { color: var(--accent); }
+
+.schedule-key .grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.schedule-key .day {
+  padding: 8px 2px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  line-height: 1.3;
+}
+
+.schedule-key .day strong { display: block; color: var(--muted); font-weight: 500; margin-bottom: 4px; font-size: 9px; }
+.schedule-key .day.legs { background: var(--strength-dim); color: var(--strength); }
+.schedule-key .day.combo { background: var(--strength-dim); color: var(--strength); }
+.schedule-key .day.quality { background: var(--accent-dim); color: var(--accent); }
+.schedule-key .day.long { background: rgba(255, 155, 61, 0.15); color: var(--long); }
+.schedule-key .day.rest { color: var(--dim); }
+
+.pace-guide {
+  margin-top: 12px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.pace-guide h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.pace-guide h3 .accent { color: var(--accent); }
+
+.pace-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.pace-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pace-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-areas:
+    "label val mi"
+    "note note note";
+  gap: 4px 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+
+.pace-row:last-child { border-bottom: none; }
+
+.pace-label {
+  grid-area: label;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.pace-val {
+  grid-area: val;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  text-align: right;
+}
+
+.pace-val span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  margin-left: 3px;
+}
+
+.pace-mi {
+  grid-area: mi;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  color: var(--dim);
+  text-align: right;
+}
+
+.pace-mi span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+
+.pace-note {
+  grid-area: note;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+  padding-left: 0;
+}
+
+.pace-row.jog .pace-label { color: var(--accent); }
+.pace-row.jog .pace-val { color: var(--accent); }
+.pace-row.tempo .pace-label { color: var(--long); }
+.pace-row.tempo .pace-val { color: var(--long); }
+
+.pace-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--heat);
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+.phase-nav {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 8px; margin: 24px 0 24px;
+  overflow-x: auto; padding-bottom: 4px;
+}
+
+.phase-pill {
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--muted); padding: 14px 8px; border-radius: 4px;
+  cursor: pointer; text-align: left; font-family: inherit;
+  transition: all 0.2s ease; min-width: 0;
+}
+
+.phase-pill:hover { border-color: var(--border-bright); color: var(--text); }
+.phase-pill.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+.phase-pill .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  display: block; margin-bottom: 2px; opacity: 0.7;
+}
+
+.phase-pill .name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px; letter-spacing: 0.02em;
+  display: block; line-height: 1;
+}
+
+.phase-section { display: none; animation: fadeIn 0.4s ease; }
+.phase-section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.phase-intro {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: 20px; align-items: start;
+  padding: 24px 0; border-top: 1px solid var(--border); margin-bottom: 8px;
+}
+
+.phase-intro .phase-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 96px; line-height: 0.8;
+  color: var(--accent); letter-spacing: -0.02em;
+}
+
+.phase-intro h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px; line-height: 1;
+  letter-spacing: 0.01em; margin-bottom: 6px;
+}
+
+.phase-intro .phase-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.phase-intro p { color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 56ch; }
+
+.week {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 4px; margin-bottom: 12px; overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.week:hover { border-color: var(--border-bright); }
+.week.current { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-dim), 0 8px 32px rgba(212, 255, 58, 0.08); }
+.week.complete .week-header .week-num { color: var(--dim); }
+
+.week-header {
+  padding: 18px 20px; display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 16px; align-items: center;
+  cursor: pointer; user-select: none;
+}
+
+.week-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; line-height: 1; letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.week.current .week-num { color: var(--accent); }
+.week-info { min-width: 0; }
+
+.week-dates {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.08em; margin-bottom: 2px;
+}
+
+.week-goal { font-size: 13px; color: var(--text); opacity: 0.85; line-height: 1.4; }
+
+.week-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 4px 8px;
+  border-radius: 3px; white-space: nowrap;
+}
+
+.week-badge.cutback { background: rgba(138, 142, 149, 0.15); color: var(--muted); }
+.week-badge.peak { background: rgba(255, 155, 61, 0.15); color: var(--long); }
+.week-badge.taper { background: rgba(212, 255, 58, 0.1); color: var(--accent); }
+.week-badge.race { background: var(--accent); color: var(--bg); font-weight: 600; }
+.week-badge.heat { background: rgba(255, 107, 61, 0.15); color: var(--heat); }
+
+.chevron {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--dim); transition: transform 0.3s ease; font-size: 12px;
+}
+
+.week.open .chevron { transform: rotate(180deg); }
+.week-body { display: none; border-top: 1px solid var(--border); }
+.week.open .week-body { display: block; }
+
+.workout {
+  display: grid; grid-template-columns: 44px 56px 1fr;
+  gap: 12px; padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+
+.workout:last-child { border-bottom: none; }
+.workout.rest { opacity: 0.45; }
+
+.workout-check {
+  appearance: none; -webkit-appearance: none;
+  width: 24px; height: 24px;
+  border: 1.5px solid var(--border-bright);
+  border-radius: 4px; cursor: pointer;
+  position: relative; margin-top: 1px;
+  background: var(--bg); transition: all 0.15s ease;
+}
+
+.workout-check:hover { border-color: var(--accent); }
+.workout-check:checked { background: var(--accent); border-color: var(--accent); }
+
+.workout-check:checked::after {
+  content: ''; position: absolute;
+  left: 7px; top: 3px; width: 6px; height: 11px;
+  border: solid var(--bg);
+  border-width: 0 2.5px 2.5px 0; transform: rotate(45deg);
+}
+
+.workout.rest .workout-check { visibility: hidden; }
+
+.workout-day {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  padding-top: 3px;
+}
+
+.workout.long .workout-day { color: var(--long); }
+.workout.strength .workout-day { color: var(--strength); }
+.workout-content { min-width: 0; }
+
+.workout-type {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.04em;
+  line-height: 1.1; margin-bottom: 4px;
+  color: var(--text);
+}
+
+.workout.long .workout-type { color: var(--long); }
+.workout.tempo .workout-type { color: var(--accent); }
+.workout.intervals .workout-type { color: var(--accent); }
+.workout.strength .workout-type { color: var(--strength); }
+.workout.race .workout-type { color: var(--accent); font-size: 24px; }
+
+.workout-stats {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-bottom: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.workout-stats .stat-time { color: var(--accent); }
+.workout-stats .stat-mi { color: var(--long); }
+.workout.strength .workout-stats .stat-time { color: var(--strength); }
+
+.workout-detail { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.workout-check:checked ~ .workout-content .workout-type,
+.workout-check:checked ~ .workout-content .workout-detail {
+  text-decoration: line-through; opacity: 0.4;
+}
+
+.principles { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+.principles h2 { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.02em; margin-bottom: 4px; }
+.principles h2 .accent { color: var(--accent); }
+
+.section-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.principle-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+.principle {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  padding: 16px 18px; border-radius: 0 4px 4px 0;
+}
+
+.principle h3 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.03em; margin-bottom: 6px; }
+.principle p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+.principle.heat { border-left-color: var(--heat); }
+.principle.heat h3 { color: var(--heat); }
+.principle.strength { border-left-color: var(--strength); }
+.principle.strength h3 { color: var(--strength); }
+
+.race-day {
+  margin-top: 40px; padding: 32px 24px;
+  background: linear-gradient(135deg, rgba(212, 255, 58, 0.05), transparent 60%), var(--surface);
+  border: 1px solid var(--border-bright);
+  border-radius: 6px; position: relative; overflow: hidden;
+}
+
+.race-day::before {
+  content: '13.1'; position: absolute;
+  right: -20px; bottom: -40px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 200px; color: var(--accent); opacity: 0.04;
+  letter-spacing: -0.04em;
+}
+
+.race-day h2 { font-family: 'Bebas Neue', sans-serif; font-size: 44px; letter-spacing: 0.02em; margin-bottom: 4px; position: relative; }
+.race-day h2 .accent { color: var(--accent); }
+.race-day .section-meta { margin-bottom: 20px; }
+
+.race-list { list-style: none; position: relative; }
+
+.race-list li {
+  display: grid; grid-template-columns: 32px 1fr;
+  gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px; line-height: 1.5;
+}
+
+.race-list li:last-child { border-bottom: none; }
+.race-list li .num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; padding-top: 2px; }
+.race-list li strong { color: var(--text); font-weight: 500; }
+.race-list li span { color: var(--muted); }
+
+.footer {
+  margin-top: 60px; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em;
+  color: var(--dim); text-transform: uppercase;
+}
+
+.reset-btn {
+  background: none; border: 1px solid var(--border);
+  color: var(--muted); font-family: inherit;
+  font-size: 10px; letter-spacing: 0.15em;
+  padding: 8px 14px; border-radius: 3px;
+  cursor: pointer; margin-top: 14px;
+  text-transform: uppercase; transition: all 0.2s ease;
+}
+
+.reset-btn:hover { border-color: var(--heat); color: var(--heat); }
+
+@media (min-width: 720px) {
+  .principle-grid { grid-template-columns: 1fr 1fr; }
+  .container { padding: 40px 32px 80px; }
+}
+
+@media (max-width: 480px) {
+  .phase-nav { grid-template-columns: repeat(5, minmax(60px, 1fr)); }
+  .phase-pill { padding: 10px 6px; }
+  .phase-pill .name { font-size: 14px; }
+  .workout { grid-template-columns: 32px 48px 1fr; gap: 10px; padding: 12px 14px; }
+  .week-header { padding: 14px 14px; gap: 10px; }
+  .week-num { font-size: 22px; }
+  .phase-intro .phase-num { font-size: 64px; }
+  .phase-intro h2 { font-size: 30px; }
+  .schedule-key .grid { font-size: 8.5px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="eyebrow"><span class="dot"></span>Training Log · Sandy · Started May 27 · Fresh Start</div>
+  <h1 class="title">HALF<br>MARATHON<span class="accent">.</span></h1>
+  <div class="countdown-row">
+    <div class="countdown" id="countdown">--</div>
+    <div class="countdown-label">days to<br>race day</div>
+  </div>
+  <div class="race-info">
+    <strong>SUN · DEC 13, 2026</strong> · DALLAS, TX · 13.1 MI · 4× LIFT / WK
+  </div>
+  <div class="progress-section">
+    <div class="progress-top">
+      <div class="progress-label">Sessions Completed</div>
+      <div class="progress-stats">
+        <span class="accent" id="done-count">0</span><span class="slash">/</span><span id="total-count">0</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <div class="schedule-key">
+    <h3>WEEKLY TEMPLATE<span class="accent">.</span></h3>
+    <div class="grid">
+      <div class="day legs"><strong>MON</strong>LEGS<br>only</div>
+      <div class="day combo"><strong>TUE</strong>PULL<br>+ run</div>
+      <div class="day combo"><strong>WED</strong>PUSH<br>+ run</div>
+      <div class="day quality"><strong>THU</strong>QUAL<br>run</div>
+      <div class="day combo"><strong>FRI</strong>ACC<br>light</div>
+      <div class="day long"><strong>SAT</strong>LONG<br>run</div>
+      <div class="day rest"><strong>SUN</strong>FULL<br>rest</div>
+    </div>
+  </div>
+
+  <div class="pace-guide">
+    <h3>PACE GUIDE<span class="accent">.</span></h3>
+    <div class="pace-sub">Effort matters more than speed. Use these as starting points.</div>
+    <div class="pace-list">
+      <div class="pace-row">
+        <div class="pace-label">WALK · WU</div>
+        <div class="pace-val">3.0–3.5 <span>mph</span></div>
+        <div class="pace-mi">17–20<span> min/mi</span></div>
+        <div class="pace-note">Conversational. Bus-catching pace.</div>
+      </div>
+      <div class="pace-row">
+        <div class="pace-label">WALK · in intervals</div>
+        <div class="pace-val">3.0 <span>mph</span></div>
+        <div class="pace-mi">20<span> min/mi</span></div>
+        <div class="pace-note">Active recovery between jog blocks.</div>
+      </div>
+      <div class="pace-row">
+        <div class="pace-label">WALK · CD</div>
+        <div class="pace-val">2.8–3.2 <span>mph</span></div>
+        <div class="pace-mi">19–21<span> min/mi</span></div>
+        <div class="pace-note">Slower than warm-up. Let HR drift down.</div>
+      </div>
+      <div class="pace-row jog">
+        <div class="pace-label">JOG · early phases</div>
+        <div class="pace-val">4.5–5.5 <span>mph</span></div>
+        <div class="pace-mi">11–13<span> min/mi</span></div>
+        <div class="pace-note">"Slow jog. I could chat but I'd rather not."</div>
+      </div>
+      <div class="pace-row jog">
+        <div class="pace-label">EASY RUN · phase 2+</div>
+        <div class="pace-val">5.5–6.0 <span>mph</span></div>
+        <div class="pace-mi">10–11<span> min/mi</span></div>
+        <div class="pace-note">Full sentences possible. Zone 2.</div>
+      </div>
+      <div class="pace-row tempo">
+        <div class="pace-label">TEMPO · phase 4+</div>
+        <div class="pace-val">6.5–7.0 <span>mph</span></div>
+        <div class="pace-mi">8:30–9:15<span> min/mi</span></div>
+        <div class="pace-note">"Comfortably hard." 3/4 effort. Short phrases only.</div>
+      </div>
+      <div class="pace-row tempo">
+        <div class="pace-label">INTERVALS · hard</div>
+        <div class="pace-val">7.0–8.0 <span>mph</span></div>
+        <div class="pace-mi">7:30–8:30<span> min/mi</span></div>
+        <div class="pace-note">Hard but controlled. ~4/5 effort.</div>
+      </div>
+      <div class="pace-row tempo">
+        <div class="pace-label">STRIDES · 20-30 sec</div>
+        <div class="pace-val">7.5–8.5 <span>mph</span></div>
+        <div class="pace-mi">7–8<span> min/mi</span></div>
+        <div class="pace-note">Smooth fast, not all-out. Full recovery between.</div>
+      </div>
+    </div>
+    <div class="pace-footer">
+      Heat adds ~0.5 mph slower at same effort. Watch HR, not pace. Talk test wins.
+    </div>
+  </div>
+</header>
+
+<nav class="phase-nav" id="phase-nav"></nav>
+
+<main id="phases"></main>
+
+<section class="principles">
+  <h2>RULES<span class="accent">.</span></h2>
+  <div class="section-meta">Non-negotiables</div>
+  <div class="principle-grid">
+    <div class="principle">
+      <h3>EASY MEANS EASY</h3>
+      <p>Conversational pace. If you can't talk in full sentences, slow down. 80% of running should feel embarrassingly slow — especially after lifting. This is the #1 mistake hybrid athletes make.</p>
+    </div>
+    <div class="principle strength">
+      <h3>LEG DAY = MONDAY</h3>
+      <p>Heavy squat/deadlift work goes on Monday only. That's 5 days clear of Saturday's long run. NEVER do heavy legs Thu/Fri — your long run will suffer and injury risk spikes.</p>
+    </div>
+    <div class="principle strength">
+      <h3>LIFT FIRST, RUN AFTER</h3>
+      <p>On combo days (Tue/Wed): lift first, fuel with carbs+protein, then run easy 30-60 min later. NEVER run hard after lifting — easy runs only on lift days. Hard runs (Thu) stay solo.</p>
+    </div>
+    <div class="principle">
+      <h3>THE 10% RULE</h3>
+      <p>Never increase weekly running mileage by more than 10%. Strength volume should stay roughly flat or follow your existing periodization. Don't ramp both at once.</p>
+    </div>
+    <div class="principle">
+      <h3>REST IS TRAINING</h3>
+      <p>Sunday is FULL rest. Adaptation happens during rest, not during workouts. Sleep 7-8 hrs. With 6 working days/week, recovery is your competitive advantage.</p>
+    </div>
+    <div class="principle">
+      <h3>GET REAL SHOES</h3>
+      <p>Luke's Locker or RunOn! in DFW for a gait analysis. Replace every 300-500 mi. Hybrid athletes pound joints harder — bad shoes will end your training.</p>
+    </div>
+    <div class="principle heat">
+      <h3>DALLAS HEAT</h3>
+      <p>Jun-Sep: lift in the gym (AC), run BEFORE 7am separately — don't try to combo same session outdoors midday. Hydrate the day BEFORE long runs. Electrolytes past 60 min.</p>
+    </div>
+    <div class="principle strength">
+      <h3>TAPER YOUR LIFTS TOO</h3>
+      <p>W26-28: reduce lift volume ~30% (lighter weights or fewer sets). W29 race week: NO heavy lifts after Tuesday — light mobility/activation only. Goal: fresh legs Dec 13, not PRs the week before.</p>
+    </div>
+  </div>
+</section>
+
+<section class="race-day">
+  <h2>RACE DAY<span class="accent">.</span></h2>
+  <div class="section-meta">December 13 · execute the plan</div>
+  <ul class="race-list">
+    <li><span class="num">01</span><span><strong>Don't try anything new.</strong> Same shoes, same socks, same breakfast, same gels you've been using all training.</span></li>
+    <li><span class="num">02</span><span><strong>Lay everything out Saturday night.</strong> Bib pinned, gear stacked, alarm set 2.5 hrs before race start.</span></li>
+    <li><span class="num">03</span><span><strong>Eat 2-3 hrs before.</strong> 400-500 calories, low fiber, simple carbs. Oatmeal, toast with PB&honey, or banana + bagel.</span></li>
+    <li><span class="num">04</span><span><strong>Start SLOW.</strong> First 2 miles should feel comically easy. Almost everyone goes out too fast and pays for it after mile 8.</span></li>
+    <li><span class="num">05</span><span><strong>Fuel at miles 4, 8, 11.</strong> Gel or chews + water. Walking through water stations is fine — sip, don't gulp.</span></li>
+    <li><span class="num">06</span><span><strong>Mile 10 is the wall.</strong> Mentally, this is where it gets hard. Break the last 5K into one mile at a time. You've trained for this.</span></li>
+    <li><span class="num">07</span><span><strong>Finish smiling.</strong> Goal #1 is to finish. Goal #2 is to negative-split (run the second half faster). Goal #3 doesn't exist.</span></li>
+  </ul>
+</section>
+
+<div class="footer">
+  Training log · Hybrid lift + run · Progress saved locally
+  <br>
+  <button class="reset-btn" onclick="resetProgress()">⟲ Reset all progress</button>
+</div>
+
+</div>
+
+<script>
+const RACE_DATE = new Date('2026-12-13T07:00:00-06:00');
+const STORAGE_KEY = 'halfmarathon-2026-progress-v3';
+
+const phases = [
+  { num: 1, name: 'Foundation', range: 'Weeks 1–6 · May 27 – Jul 5', summary: 'Fresh start, Wednesday May 27. Week 1 is a 5-day ramp-in (Wed-Sun). Build the engine from zero while keeping your 4-day lift schedule. Run/walk intervals after lifting; Sat is the long run/walk.' },
+  { num: 2, name: 'Base', range: 'Weeks 7–12 · Jul 6 – Aug 16', summary: 'Continuous running starts. Dallas hits 100°+ — run before 7am or treadmill. Lift in AC gym, run separately at dawn. Friday becomes light accessory day to keep Saturday legs fresh.' },
+  { num: 3, name: 'Build', range: 'Weeks 13–16 · Aug 17 – Sep 13', summary: 'Adding a third weekly easy run (Wed after Push). Long runs reach 7 miles. Week 16 cutback gives legs and CNS a real break. Keep lift intensity steady.' },
+  { num: 4, name: 'Sharpen', range: 'Weeks 17–27 · Sep 14 – Nov 29', summary: 'Real half-marathon work. Quality runs (tempo/intervals) on Thursdays — solo, NEVER after a lift. Cutbacks every 3-4 weeks. Long runs build to 13 mi. Heat finally breaks.' },
+  { num: 5, name: 'Race', range: 'Weeks 28–29 · Nov 30 – Dec 13', summary: 'Lift volume reduces 30% in W28. Race week: no heavy lifts after Tuesday — mobility and activation only. Legs feel itchy and fresh. Trust the plan.' }
+];
+
+const plan = [
+  // PHASE 1 — FOUNDATION (jog ~5 mph / 12 min/mi · walk ~3 mph / 20 min/mi)
+  { phase: 1, week: 1, dates: 'May 27 – May 31', goal: '🚀 FRESH START. 5-day ramp-in. First run today after Push. Build the habit.', workouts: [
+    { day: 'WED', type: 'PUSH + INTRO RUN/WALK', totalMin: 25, runMi: 1.4, detail: 'Push session (your normal Push day) • 30 min later: 5 min walk WU · [1 min jog / 2 min walk] × 5 · 5 min walk CD', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 28, runMi: 1.6, detail: 'Arms/core/mobility (light, no leg work) • then: 5 min walk WU · [1 min jog / 2 min walk] × 6 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: 'Full rest. Hydrate. Carbs at dinner — first long run tomorrow.', rest: true },
+    { day: 'SAT', type: 'FIRST LONG RUN/WALK', totalMin: 31, runMi: 1.8, detail: '5 min walk WU · [1 min jog / 2 min walk] × 7 · 5 min walk CD · slowest pace possible', long: true },
+    { day: 'SUN', type: 'REST', detail: '20-30 min easy walk optional. Reflect on week 1 done.', rest: true }
+  ]},
+  { phase: 1, week: 2, dates: 'Jun 1 – Jun 7', goal: 'Full Mon-Sun week. Body learning to handle the load.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower — your normal session', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 34, runMi: 2.0, detail: 'Pull lifts first • then: 5 min walk WU · [1 min jog / 2 min walk] × 8 · 5 min walk CD', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session • no running today — legs recovering from Mon', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 34, runMi: 2.0, detail: 'Light accessories • then: 5 min walk WU · [1 min jog / 2 min walk] × 8 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: 'Full rest before long run', rest: true },
+    { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 35, runMi: 2.1, detail: '5 min walk WU · [1.5 min jog / 2 min walk] × 7 · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '25 min walk optional', rest: true }
+  ]},
+  { phase: 1, week: 3, dates: 'Jun 8 – Jun 14', goal: 'Jog intervals double to 2 min. Run BEFORE 7am — heat is real.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 38, runMi: 2.4, detail: 'Pull first • then: 5 min walk WU · [2 min jog / 2 min walk] × 7 · 5 min walk CD · BEFORE 7AM', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 38, runMi: 2.4, detail: 'Accessories • then: 5 min walk WU · [2 min jog / 2 min walk] × 7 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 42, runMi: 2.6, detail: '5 min walk WU · [2 min jog / 2 min walk] × 8 · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 1, week: 4, dates: 'Jun 15 – Jun 21', goal: 'Jog intervals to 3 min. In summer heat, split lift+run sessions (lift PM, run AM next day).', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 40, runMi: 2.6, detail: 'Pull lifts • then: 5 min walk WU · [3 min jog / 2 min walk] × 6 · 5 min walk CD', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 40, runMi: 2.6, detail: 'Light accessories • then: 5 min walk WU · [3 min jog / 2 min walk] × 6 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 46, runMi: 3.1, detail: '5 min walk WU · [4 min jog / 2 min walk] × 6 · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 1, week: 5, dates: 'Jun 22 – Jun 28', goal: 'First 5-min jog blocks. You\'re running now.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 45, runMi: 3.1, detail: 'Pull • then: 5 min walk WU · [5 min jog / 2 min walk] × 5 · 5 min walk CD', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 45, runMi: 3.1, detail: 'Accessories • then: 5 min walk WU · [5 min jog / 2 min walk] × 5 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 50, runMi: 3.5, detail: '5 min walk WU · [6 min jog / 2 min walk] × 5 · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 1, week: 6, dates: 'Jun 29 – Jul 5', goal: 'First continuous runs. Bridge to Base phase.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 50, runMi: 3.6, detail: 'Pull • then: 5 min walk WU · [8 min jog / 2 min walk] × 4 · 5 min walk CD', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 35, runMi: 2.6, detail: 'Accessories • then: 5 min walk WU · 25 min continuous easy jog (walk if needed) · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 40, runMi: 3.0, detail: '5 min walk WU · 30 min continuous jog (slowest pace possible) · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+
+  // PHASE 2 — BASE (easy run ~10 min/mi · WU/CD = start/end slow)
+  { phase: 2, week: 7, dates: 'Jul 6 – Jul 12', goal: 'All runs continuous now. 3 runs + 4 lifts.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 25, runMi: 2.5, detail: 'Pull • then 25 min easy continuous (first 5 min as WU, last 5 min ease off as CD) · BEFORE 7AM', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 25, runMi: 2.5, detail: 'Accessories • then 25 min easy continuous (start slow, finish slow)', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 30, runMi: 3.0, detail: '30 min easy continuous · first 5 & last 5 as built-in WU/CD', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 2, week: 8, dates: 'Jul 13 – Jul 19', goal: 'Volume up slightly. Hydrate aggressively.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 28, runMi: 2.8, detail: 'Pull • then 28 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 28, runMi: 2.8, detail: 'Accessories • then 28 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 35, runMi: 3.5, detail: '35 min easy continuous', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 2, week: 9, dates: 'Jul 20 – Jul 26', goal: 'Long run cracks 4 miles.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull • then 30 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Accessories • then 30 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 40, runMi: 4.0, detail: '40 min easy continuous', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 2, week: 10, dates: 'Jul 27 – Aug 2', goal: 'Body adapting. Lift loads should still feel normal.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull • then 30 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Accessories • then 35 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 45, runMi: 4.5, detail: '45 min easy continuous', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 2, week: 11, dates: 'Aug 3 – Aug 9', goal: 'First 5-mile long run.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull • then 30 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Accessories • then 35 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 50, runMi: 5.0, detail: '50 min easy continuous · ~5 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 2, week: 12, dates: 'Aug 10 – Aug 16', goal: 'Last week of base. Ready to build.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Accessories • then 40 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 55, runMi: 5.5, detail: '55 min easy continuous · ~5.5 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+
+  // PHASE 3 — BUILD
+  { phase: 3, week: 13, dates: 'Aug 17 – Aug 23', goal: 'Adding 4th weekly run on Wednesday after Push.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push (slightly lighter) • then 30 min easy', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Accessories • then 35 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: 'Full rest before long run', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 60, runMi: 6.0, detail: '60 min easy continuous · ~6 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 3, week: 14, dates: 'Aug 24 – Aug 30', goal: '6.5 mi long.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push • then 30 min easy', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Accessories • then 35 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 65, runMi: 6.5, detail: '65 min easy continuous · ~6.5 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 3, week: 15, dates: 'Aug 31 – Sep 6', goal: '7 miles. Big milestone.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push • then 30 min easy', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Accessories • then 40 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 70, runMi: 7.0, detail: '70 min easy continuous · ~7 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 3, week: 16, dates: 'Sep 7 – Sep 13', goal: 'CUTBACK week. Reduce run volume AND lift intensity ~15%. Recover.', cutback: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Lighter — drop a set or use 85% of normal load', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull (lighter) • then 30 min easy', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push (lighter) • no run this week — cutback', strength: true },
+    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Accessories • then 30 min easy', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 50, runMi: 5.0, detail: '50 min easy continuous · ~5 mi', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+
+  // PHASE 4 — SHARPEN
+  { phase: 4, week: 17, dates: 'Sep 14 – Sep 20', goal: 'Heat breaking. Thursday becomes QUALITY day. Accessory moves to Friday.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower — back to full intensity', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'TEMPO RUN', totalMin: 30, runMi: 3.2, detail: 'Solo run · 10 min walk/jog WU · 15 min "comfortably hard" tempo (3/4 effort) · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Arms, core, mobility — NO leg work. Keep it under 30 min.', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 70, runMi: 7.0, detail: '7 mi easy · ~70 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 18, dates: 'Sep 21 – Sep 27', goal: 'First intervals. Quality day stays solo, no lift interference.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'INTERVALS', totalMin: 35, runMi: 3.7, detail: 'Solo · 10 min WU · [3 min hard / 2 min easy] × 4 · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper body accessories only', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 80, runMi: 8.0, detail: '8 mi easy · ~80 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 19, dates: 'Sep 28 – Oct 4', goal: 'Tempo + 9 mi.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'TEMPO RUN', totalMin: 35, runMi: 3.8, detail: 'Solo · 10 min WU · 20 min tempo · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper accessories', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 90, runMi: 9.0, detail: '9 mi easy · ~90 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 20, dates: 'Oct 5 – Oct 11', goal: 'CUTBACK. Reduce all volume. Absorb the work.', cutback: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Lighter — 85% normal', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull (lighter) • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push (lighter) • then 30 min easy with 4× 30-sec strides at end', strength: true },
+    { day: 'THU', type: 'EASY RUN', totalMin: 35, runMi: 3.5, detail: '35 min easy — no quality this week' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Mobility focus', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 60, runMi: 6.0, detail: '6 mi easy · ~60 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 21, dates: 'Oct 12 – Oct 18', goal: '10-mile long run. Practice race fueling.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'INTERVALS', totalMin: 40, runMi: 4.2, detail: 'Solo · 10 min WU · [3 min hard / 2 min easy] × 5 · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper accessories', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 100, runMi: 10.0, detail: '10 mi · practice fueling at miles 4 & 7', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 22, dates: 'Oct 19 – Oct 25', goal: '11 mi. Race-distance training pace.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'TEMPO RUN', totalMin: 40, runMi: 4.3, detail: 'Solo · 10 min WU · 25 min tempo · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper accessories', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 110, runMi: 11.0, detail: '11 mi · fuel at miles 4 & 8', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 23, dates: 'Oct 26 – Nov 1', goal: 'CUTBACK before peak push.', cutback: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Lighter — 85% normal', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull (lighter) • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push (lighter) • then 35 min easy with 4× 30-sec strides at end', strength: true },
+    { day: 'THU', type: 'EASY RUN', totalMin: 35, runMi: 3.5, detail: '35 min easy — no quality this week' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Mobility focus', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 80, runMi: 8.0, detail: '8 mi easy · ~80 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 24, dates: 'Nov 2 – Nov 8', goal: '12 miles. Cool weather should make this feel great.', workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'INTERVALS', totalMin: 39, runMi: 4.1, detail: 'Solo · 10 min WU · [4 min hard / 2 min easy] × 4 · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper accessories', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 120, runMi: 12.0, detail: '12 mi · fuel at miles 4, 7, 10', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 25, dates: 'Nov 9 – Nov 15', goal: 'PEAK WEEK. 13 mi — dress rehearsal.', peak: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower — last heavy week', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 45, runMi: 4.5, detail: 'Pull • then 45 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Push • then 35 min easy', strength: true },
+    { day: 'THU', type: 'TEMPO RUN', totalMin: 45, runMi: 4.8, detail: 'Solo · 10 min WU · 30 min tempo · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Upper accessories only', strength: true },
+    { day: 'SAT', type: 'PEAK LONG', totalMin: 130, runMi: 13.0, detail: '13 MI · race-day pace, fuel, gear — full dress rehearsal', long: true },
+    { day: 'SUN', type: 'REST', detail: 'Full rest after peak', rest: true }
+  ]},
+  { phase: 4, week: 26, dates: 'Nov 16 – Nov 22', goal: 'TAPER begins. Lift volume drops ~30%. Quality stays.', taper: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY (REDUCED)', detail: 'Drop 1 set per exercise OR use 80% of normal load. NO new PRs.', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull (lighter) • then 40 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push (lighter) • then 30 min easy', strength: true },
+    { day: 'THU', type: 'TEMPO RUN', totalMin: 35, runMi: 3.8, detail: 'Solo · 10 min WU · 20 min tempo · 5 min walk CD' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Very light upper', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 100, runMi: 10.0, detail: '10 mi easy · ~100 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+  { phase: 4, week: 27, dates: 'Nov 23 – Nov 29', goal: 'Continue taper. Strides keep legs sharp.', taper: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY (REDUCED)', detail: 'Continue 80% loads, 1 less set', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull (lighter) • then 35 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push (lighter) • then 30 min easy with 4× 20-sec strides at end', strength: true },
+    { day: 'THU', type: 'EASY RUN', totalMin: 30, runMi: 3.0, detail: '30 min easy — strides only, no tempo' },
+    { day: 'FRI', type: 'ACCESSORY (LIGHT)', detail: 'Mobility & light upper', strength: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 80, runMi: 8.0, detail: '8 mi easy · ~80 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '', rest: true }
+  ]},
+
+  // PHASE 5 — RACE
+  { phase: 5, week: 28, dates: 'Nov 30 – Dec 6', goal: 'Final full week. Lift volume at 70%. Legs feel itchy — resist the urge to do more.', taper: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY (LIGHT)', detail: '70% volume. Body-weight or light loads. NO heavy squats/DLs.', strength: true },
+    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull (light, no failure sets) • then 30 min easy', strength: true },
+    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 25, runMi: 2.5, detail: 'Push (light) • then 25 min easy with 4× 20-sec strides at end', strength: true },
+    { day: 'THU', type: 'EASY RUN', totalMin: 25, runMi: 2.5, detail: '25 min very easy' },
+    { day: 'FRI', type: 'REST', detail: 'Full rest — skip Friday accessory this week', rest: true },
+    { day: 'SAT', type: 'LONG RUN', totalMin: 50, runMi: 5.0, detail: '5 mi easy · last "long" run · ~50 min', long: true },
+    { day: 'SUN', type: 'REST', detail: '20 min very easy walk OR full rest', rest: true }
+  ]},
+  { phase: 5, week: 29, dates: 'Dec 7 – Dec 13', goal: 'RACE WEEK. NO heavy lifts after Tuesday. Hydrate. Sleep. Trust the work.', race: true, workouts: [
+    { day: 'MON', type: 'LIGHT LEGS (OPTIONAL)', detail: 'Mobility, glute activation, bodyweight only. OR full rest. NO squats/DLs.', strength: true },
+    { day: 'TUE', type: 'LIGHT PULL + SHAKEOUT', totalMin: 25, runMi: 2.5, detail: 'Pull with light loads, no max effort • then 25 min easy with 4× 20-sec strides at end', strength: true },
+    { day: 'WED', type: 'REST', detail: 'Full rest. Hydrate. Light stretching only.', rest: true },
+    { day: 'THU', type: 'EASY SHAKEOUT', totalMin: 20, runMi: 2.0, detail: '20 min very easy · stop if anything feels off' },
+    { day: 'FRI', type: 'REST', detail: 'Pasta dinner. Bib pickup. Lay out gear. Early bed.', rest: true },
+    { day: 'SAT', type: 'SHAKEOUT', totalMin: 10, runMi: 1.0, detail: '10 min very easy jog OR rest · early bed · NO new food' },
+    { day: 'SUN', type: 'RACE DAY · 13.1 MI', totalMin: 145, runMi: 13.1, detail: '🏁 DEC 13 · DALLAS · execute the plan · start SLOW · finish smiling', race: true, long: true }
+  ]}
+];
+
+const phaseNav = document.getElementById('phase-nav');
+phases.forEach(p => {
+  const btn = document.createElement('button');
+  btn.className = 'phase-pill';
+  btn.dataset.phase = p.num;
+  btn.innerHTML = `<span class="num">PHASE 0${p.num}</span><span class="name">${p.name}</span>`;
+  btn.onclick = () => showPhase(p.num);
+  phaseNav.appendChild(btn);
+});
+
+const phasesEl = document.getElementById('phases');
+phases.forEach(p => {
+  const section = document.createElement('section');
+  section.className = 'phase-section';
+  section.id = `phase-${p.num}`;
+  section.innerHTML = `
+    <div class="phase-intro">
+      <div class="phase-num">0${p.num}</div>
+      <div>
+        <h2>${p.name.toUpperCase()}</h2>
+        <div class="phase-meta">${p.range}</div>
+        <p>${p.summary}</p>
+      </div>
+    </div>
+    <div class="weeks" id="weeks-${p.num}"></div>
+  `;
+  phasesEl.appendChild(section);
+});
+
+plan.forEach((w) => {
+  const wkEl = document.createElement('div');
+  wkEl.className = 'week';
+  wkEl.dataset.week = w.week;
+
+  let badge = '';
+  if (w.race) badge = '<span class="week-badge race">RACE WEEK</span>';
+  else if (w.peak) badge = '<span class="week-badge peak">PEAK</span>';
+  else if (w.taper) badge = '<span class="week-badge taper">TAPER</span>';
+  else if (w.cutback) badge = '<span class="week-badge cutback">CUTBACK</span>';
+  else if (w.heat) badge = '<span class="week-badge heat">🔥 DALLAS HEAT</span>';
+
+  const workoutsHtml = w.workouts.map((wo, i) => {
+    const id = `w${w.week}-${i}`;
+    const classes = ['workout'];
+    if (wo.rest) classes.push('rest');
+    if (wo.long) classes.push('long');
+    if (wo.strength) classes.push('strength');
+    if (wo.type.includes('TEMPO')) classes.push('tempo');
+    if (wo.type.includes('INTERVALS')) classes.push('intervals');
+    if (wo.race) classes.push('race');
+
+    const hasStats = wo.totalMin || wo.runMi;
+    const statsHtml = hasStats ? `<div class="workout-stats">${wo.totalMin ? `<span class="stat-time">🕐 ${wo.totalMin} min</span>` : ''}${wo.runMi ? `<span class="stat-mi">📏 ~${wo.runMi} mi</span>` : ''}</div>` : '';
+
+    return `
+      <div class="${classes.join(' ')}">
+        <input type="checkbox" class="workout-check" id="${id}" data-id="${id}" ${wo.rest ? 'disabled' : ''}>
+        <div class="workout-day">${wo.day}</div>
+        <div class="workout-content">
+          <div class="workout-type">${wo.type}</div>
+          ${statsHtml}
+          ${wo.detail ? `<div class="workout-detail">${wo.detail}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  wkEl.innerHTML = `
+    <div class="week-header">
+      <div class="week-num">W${String(w.week).padStart(2, '0')}</div>
+      <div class="week-info">
+        <div class="week-dates">${w.dates}</div>
+        <div class="week-goal">${w.goal}</div>
+      </div>
+      ${badge}
+      <div class="chevron">▾</div>
+    </div>
+    <div class="week-body">${workoutsHtml}</div>
+  `;
+
+  wkEl.querySelector('.week-header').addEventListener('click', () => {
+    wkEl.classList.toggle('open');
+  });
+
+  document.getElementById(`weeks-${w.phase}`).appendChild(wkEl);
+});
+
+// Hybrid storage: localStorage as primary (reliable in iframe), window.storage as best-effort cloud sync
+const storage = {
+  async load() {
+    // Try localStorage first
+    let local = null;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) local = JSON.parse(raw);
+    } catch {}
+
+    // Try cloud — if it has data, merge it (cloud wins on conflict if newer)
+    if (typeof window.storage !== 'undefined') {
+      try {
+        const result = await window.storage.get(STORAGE_KEY);
+        if (result && result.value) {
+          const cloud = JSON.parse(result.value);
+          return local ? { ...local, ...cloud } : cloud;
+        }
+      } catch (e) { /* cloud unavailable, that's fine */ }
+    }
+    return local || {};
+  },
+  async save(data) {
+    const json = JSON.stringify(data);
+    // Save locally FIRST — this is what actually persists
+    let localOk = false;
+    try {
+      localStorage.setItem(STORAGE_KEY, json);
+      localOk = true;
+    } catch (e) {
+      console.error('Local save failed:', e);
+    }
+    // Best-effort cloud sync, silently
+    if (typeof window.storage !== 'undefined') {
+      try { await window.storage.set(STORAGE_KEY, json); } catch {}
+    }
+    return localOk;
+  },
+  async clear() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    if (typeof window.storage !== 'undefined') {
+      try { await window.storage.delete(STORAGE_KEY); } catch {}
+    }
+  }
+};
+
+// Debounce saves so rapid taps don't hit rate limits
+let saveTimer;
+function scheduleSave(data) {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => storage.save(data), 400);
+}
+
+let progress = {};
+
+async function initProgress() {
+  progress = await storage.load();
+  document.querySelectorAll('.workout-check').forEach(cb => {
+    if (progress[cb.dataset.id]) cb.checked = true;
+    cb.addEventListener('change', () => {
+      progress[cb.dataset.id] = cb.checked;
+      scheduleSave(progress);
+      updateProgress();
+    });
+  });
+  updateProgress();
+}
+
+const totalCheckable = document.querySelectorAll('.workout-check:not([disabled])').length;
+document.getElementById('total-count').textContent = totalCheckable;
+
+function updateProgress() {
+  const done = document.querySelectorAll('.workout-check:checked').length;
+  const pct = totalCheckable > 0 ? (done / totalCheckable) * 100 : 0;
+  document.getElementById('done-count').textContent = done;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  document.querySelectorAll('.week').forEach(wk => {
+    const checks = wk.querySelectorAll('.workout-check:not([disabled])');
+    const checked = wk.querySelectorAll('.workout-check:checked').length;
+    if (checks.length > 0 && checked === checks.length) wk.classList.add('complete');
+    else wk.classList.remove('complete');
+  });
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = RACE_DATE - now;
+  const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  document.getElementById('countdown').textContent = days;
+}
+
+function showPhase(num) {
+  document.querySelectorAll('.phase-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.phase-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById(`phase-${num}`).classList.add('active');
+  document.querySelector(`.phase-pill[data-phase="${num}"]`).classList.add('active');
+}
+
+function detectCurrentWeek() {
+  const w1start = new Date('2026-05-27T00:00:00-05:00');
+  const w2start = new Date('2026-06-01T00:00:00-05:00');
+  const now = new Date();
+  let currentWeek;
+  if (now < w2start) {
+    currentWeek = 1;
+  } else {
+    const weeksFromW2 = Math.floor((now - w2start) / (7 * 24 * 60 * 60 * 1000));
+    currentWeek = Math.max(2, Math.min(29, 2 + weeksFromW2));
+  }
+
+  const currentWeekData = plan.find(w => w.week === currentWeek);
+  if (currentWeekData) {
+    showPhase(currentWeekData.phase);
+    setTimeout(() => {
+      const wkEl = document.querySelector(`.week[data-week="${currentWeek}"]`);
+      if (wkEl) {
+        wkEl.classList.add('current', 'open');
+      }
+    }, 50);
+  } else {
+    showPhase(1);
+  }
+}
+
+async function resetProgress() {
+  if (confirm('Reset all training progress? This cannot be undone.')) {
+    await storage.clear();
+    progress = {};
+    document.querySelectorAll('.workout-check').forEach(cb => cb.checked = false);
+    updateProgress();
+  }
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+detectCurrentWeek();
+initProgress();
+</script>
+</body>
+</html>
