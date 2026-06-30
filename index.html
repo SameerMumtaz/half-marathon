@@ -1432,9 +1432,9 @@ const RACE_DATE = new Date('2026-12-13T07:00:00-06:00');
 const STORAGE_KEY = 'halfmarathon-2026-progress-v4';
 
 const phases = [
-  { num: 1, name: 'Foundation', range: 'Weeks 1–6 · May 27 – Jul 5', summary: 'Fresh start, Wednesday May 27. Week 1 is a 5-day ramp-in (Wed–Sun). Build the engine from zero while keeping your 4-day lift schedule. Run/walk intervals after lifting; Sat is the long run.' },
-  { num: 2, name: 'Base', range: 'Weeks 7–12 · Jul 6 – Aug 16', summary: 'Continuous running starts. Dallas hits 100°+ — run before 7am or treadmill. Lift in AC gym, run separately at dawn. Friday becomes light accessory day to keep Saturday legs fresh.' },
-  { num: 3, name: 'Build', range: 'Weeks 13–16 · Aug 17 – Sep 13', summary: 'Adding a 4th weekly easy run (Wed after Push). Long runs reach 7 miles. Week 16 cutback gives legs and CNS a real break. Keep lift intensity steady.' },
+  { num: 1, name: 'Foundation', range: 'Weeks 1–7 · May 27 – Jul 12', summary: 'Fresh start May 27. Hawaii break absorbed at W6 as a re-entry week — W4 paces to ease back in. W7 bridges into Base with first continuous runs. Build the engine while keeping your 4-day lift schedule.' },
+  { num: 2, name: 'Base', range: 'Weeks 8–13 · Jul 13 – Aug 23', summary: 'Continuous running starts. Dallas hits 100°+ — run before 7am or treadmill. Lift in AC gym, run separately at dawn. Friday becomes light accessory day to keep Saturday legs fresh.' },
+  { num: 3, name: 'Build', range: 'Weeks 14–16 · Aug 24 – Sep 13', summary: 'Adding a 4th weekly easy run (Wed after Push). Long runs reach 7 miles. Week 16 cutback gives legs and CNS a real break. Compressed to 3 weeks to absorb the Hawaii break — keep lift intensity steady.' },
   { num: 4, name: 'Sharpen', range: 'Weeks 17–27 · Sep 14 – Nov 29', summary: 'Real half-marathon work. Quality runs (tempo/intervals) on Thursdays — solo, NEVER after a lift. Cutbacks every 3–4 weeks. Long runs build to 13 mi. Heat finally breaks.' },
   { num: 5, name: 'Race', range: 'Weeks 28–29 · Nov 30 – Dec 13', summary: 'Lift volume reduces 30% in W28. Race week: no heavy lifts after Tuesday — mobility and activation only. Legs feel itchy and fresh. Trust the plan.' }
 ];
@@ -1485,7 +1485,16 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 50, runMi: 3.5, detail: '5 min walk WU · [6 min jog / 2 min walk] × 5 · 5 min walk CD', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 1, week: 6, dates: 'Jun 29 – Jul 5', goal: 'First continuous runs. Bridge to Base phase.', heat: true, workouts: [
+  { phase: 1, week: 6, dates: 'Jun 29 – Jul 5', goal: '🌴 RE-ENTRY after 8-day Hawaii break. W4 paces. Ease back in — body remembers, just remind it gently.', heat: true, workouts: [
+    { day: 'MON', type: 'LEGS DAY (85%)', detail: 'Ease back in — 85% of normal loads. Body needs to recalibrate.', strength: true },
+    { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 35, runMi: 2.2, detail: 'Pull lifts (lighter) • then: 5 min walk WU · [3 min jog / 2 min walk] × 5 · 5 min walk CD · BEFORE 7AM', strength: true },
+    { day: 'WED', type: 'PUSH DAY', detail: 'Push session — back to normal loads', strength: true },
+    { day: 'THU', type: 'ACCESSORY + RUN/WALK', totalMin: 40, runMi: 2.6, detail: 'Light accessories • then: 5 min walk WU · [3 min jog / 2 min walk] × 6 · 5 min walk CD', strength: true },
+    { day: 'FRI', type: 'REST', detail: '', rest: true },
+    { day: 'SAT', type: 'LONG RUN/WALK', totalMin: 46, runMi: 3.1, detail: '5 min walk WU · [4 min jog / 2 min walk] × 6 · 5 min walk CD', long: true },
+    { day: 'SUN', type: 'REST', detail: 'Recovery walk optional. You\'re back on the wagon.', rest: true }
+  ]},
+  { phase: 1, week: 7, dates: 'Jul 6 – Jul 12', goal: 'Bridge week. First continuous runs to set up Base phase.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + RUN/WALK', totalMin: 42, runMi: 3.0, detail: 'Pull • then: 5 min walk WU · [6 min jog / 2 min walk] × 4 · 5 min walk CD', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1496,7 +1505,7 @@ const plan = [
   ]},
 
   // ─── PHASE 2 — BASE ───
-  { phase: 2, week: 7, dates: 'Jul 6 – Jul 12', goal: 'All runs continuous now. 3 runs + 4 lifts.', heat: true, workouts: [
+  { phase: 2, week: 8, dates: 'Jul 13 – Jul 19', goal: 'All runs continuous now. 3 runs + 4 lifts. Welcome to Base.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Pull • then 30 min easy continuous (first 5 min as WU, last 5 min ease off as CD) · BEFORE 7AM', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1505,7 +1514,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 35, runMi: 3.5, detail: '35 min easy continuous · first 5 & last 5 as built-in WU/CD', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 2, week: 8, dates: 'Jul 13 – Jul 19', goal: 'Volume up slightly. Hydrate aggressively.', heat: true, workouts: [
+  { phase: 2, week: 9, dates: 'Jul 20 – Jul 26', goal: 'Volume up slightly. Hydrate aggressively.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 32, runMi: 3.2, detail: 'Pull • then 32 min easy', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1514,7 +1523,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 40, runMi: 4.0, detail: '40 min easy continuous · ~4 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 2, week: 9, dates: 'Jul 20 – Jul 26', goal: 'Long run cracks 4.5 miles.', heat: true, workouts: [
+  { phase: 2, week: 10, dates: 'Jul 27 – Aug 2', goal: 'Long run cracks 4.5 miles.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull • then 35 min easy', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1523,7 +1532,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 45, runMi: 4.5, detail: '45 min easy continuous · ~4.5 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 2, week: 10, dates: 'Jul 27 – Aug 2', goal: 'Body adapting. Lift loads should still feel normal.', heat: true, workouts: [
+  { phase: 2, week: 11, dates: 'Aug 3 – Aug 9', goal: 'Body adapting. Lift loads should still feel normal.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull • then 35 min easy', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1532,7 +1541,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 50, runMi: 5.0, detail: '50 min easy continuous · ~5 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 2, week: 11, dates: 'Aug 3 – Aug 9', goal: 'First 5.5-mile long run.', heat: true, workouts: [
+  { phase: 2, week: 12, dates: 'Aug 10 – Aug 16', goal: 'First 5.5-mile long run.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 38, runMi: 3.8, detail: 'Pull • then 38 min easy', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1541,7 +1550,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 55, runMi: 5.5, detail: '55 min easy continuous · ~5.5 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 2, week: 12, dates: 'Aug 10 – Aug 16', goal: 'Last week of base. Ready to build.', heat: true, workouts: [
+  { phase: 2, week: 13, dates: 'Aug 17 – Aug 23', goal: 'Last week of base. Ready to build.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
     { day: 'WED', type: 'PUSH DAY', detail: 'Push session', strength: true },
@@ -1551,8 +1560,8 @@ const plan = [
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
 
-  // ─── PHASE 3 — BUILD ───
-  { phase: 3, week: 13, dates: 'Aug 17 – Aug 23', goal: 'Adding 4th weekly run on Wednesday after Push.', heat: true, workouts: [
+  // ─── PHASE 3 — BUILD (compressed to 3 weeks) ───
+  { phase: 3, week: 14, dates: 'Aug 24 – Aug 30', goal: 'Adding 4th weekly run on Wednesday after Push.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 40, runMi: 4.0, detail: 'Pull • then 40 min easy', strength: true },
     { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 30, runMi: 3.0, detail: 'Push (slightly lighter) • then 30 min easy', strength: true },
@@ -1561,7 +1570,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 65, runMi: 6.5, detail: '65 min easy continuous · ~6.5 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 3, week: 14, dates: 'Aug 24 – Aug 30', goal: '7 mi long.', heat: true, workouts: [
+  { phase: 3, week: 15, dates: 'Aug 31 – Sep 6', goal: '7 mi long.', heat: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 42, runMi: 4.2, detail: 'Pull • then 42 min easy', strength: true },
     { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 32, runMi: 3.2, detail: 'Push • then 32 min easy', strength: true },
@@ -1570,16 +1579,7 @@ const plan = [
     { day: 'SAT', type: 'LONG RUN', totalMin: 70, runMi: 7.0, detail: '70 min easy continuous · ~7 mi', long: true },
     { day: 'SUN', type: 'REST', detail: '', rest: true }
   ]},
-  { phase: 3, week: 15, dates: 'Aug 31 – Sep 6', goal: '7.5 mi long. Big milestone.', heat: true, workouts: [
-    { day: 'MON', type: 'LEGS DAY', detail: 'Heavy lower', strength: true },
-    { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 45, runMi: 4.5, detail: 'Pull • then 45 min easy', strength: true },
-    { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 32, runMi: 3.2, detail: 'Push • then 32 min easy', strength: true },
-    { day: 'THU', type: 'ACCESSORY + EASY RUN', totalMin: 42, runMi: 4.2, detail: 'Accessories • then 42 min easy', strength: true },
-    { day: 'FRI', type: 'REST', detail: '', rest: true },
-    { day: 'SAT', type: 'LONG RUN', totalMin: 75, runMi: 7.5, detail: '75 min easy continuous · ~7.5 mi', long: true },
-    { day: 'SUN', type: 'REST', detail: '', rest: true }
-  ]},
-  { phase: 3, week: 16, dates: 'Sep 7 – Sep 13', goal: 'CUTBACK week. Reduce run volume AND lift intensity ~15%. Recover.', cutback: true, workouts: [
+  { phase: 3, week: 16, dates: 'Sep 7 – Sep 13', goal: 'CUTBACK week. Reduce run volume AND lift intensity ~15%. Recover before Sharpen.', cutback: true, workouts: [
     { day: 'MON', type: 'LEGS DAY', detail: 'Lighter — drop a set or use 85% of normal load', strength: true },
     { day: 'TUE', type: 'PULL + EASY RUN', totalMin: 35, runMi: 3.5, detail: 'Pull (lighter) • then 35 min easy', strength: true },
     { day: 'WED', type: 'PUSH + EASY RUN', totalMin: 28, runMi: 2.8, detail: 'Push (lighter) • then 28 min easy', strength: true },
